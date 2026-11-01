@@ -2974,6 +2974,7 @@ def test_server_instructions_document_the_argument_naming_convention():
 
     for argument in (
         "workflow_path",
+        "media_path",
         "out_path",
         "out_dir",
         "name",
@@ -3017,7 +3018,7 @@ def test_tool_arguments_follow_the_naming_convention():
         assert "object_info_path" not in tool_parameters[name].get("required", [])
 
     # Output file -> `out_path`; output directory -> `out_dir`.
-    for name in ("fetch_template", "partner_generate"):
+    for name in ("fetch_template", "partner_generate", "preview_media"):
         assert "out_path" in schemas[name]
     for name in ("fetch_outputs", "vary_workflow"):
         assert "out_dir" in schemas[name]
