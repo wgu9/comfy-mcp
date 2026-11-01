@@ -94,9 +94,8 @@ registry slugs, refusing a URL, since the prompt promises a REGISTRY pack.
 `restart_comfyui`'s kill gate is STATE-scoped instead, firing mid-sequence once a launch
 loses the port. Mirror the engine's contract per tool; never generalize one gate to another.
 
-Local differentiators: discovery (`nodes`, `search_models`) reads the **live install** by
-default, custom nodes included (`nodes` can instead read a saved `object_info` snapshot),
-while `preview_media` returns comfy-cli's rendered PNG as MCP image content.
+Local differentiators: discovery (`nodes`, `search_models`) reads the **live install**, custom nodes
+included (`nodes` can take a saved `object_info`); `preview_media` returns comfy-cli's PNG inline.
 
 ## Module layout
 
@@ -153,10 +152,9 @@ They mirror how `server` spawns the CLI: a spawn-signature change is one edit, n
 
 - `envelope(ok=…, data=…, error=…)` — build an `envelope/1` body.
 - `patched_run(stdout=…, returncode=…, stderr=…, raises=…, on_spawn=…, replies=…) -> calls` — the plain
-  `--json` path (`subprocess.Popen` + bounded `communicate`); `calls` records
-  `cmd`/`env`/`timeout`/`encoding` per
-  call for exact-argv checks; `on_spawn(cmd)` fires at spawn so the one verb whose answer is
-  a FILE writes its `--output`.
+  `--json` path (`subprocess.Popen` + bounded `communicate`); `calls` records `cmd`/`env`/
+  `timeout`/`encoding` per call for exact-argv checks; `on_spawn(cmd)` fires at spawn so the one
+  verb whose answer is a FILE writes its `--output`.
 - `patched_plain_run(returncode, stdout, stderr) -> calls` — same, for verbs that print
   human text with no envelope (`launch`/`stop`/`generate`).
 - `patched_stream(stdout_text) -> procs` — the `--json-stream` NDJSON path
